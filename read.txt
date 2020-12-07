@@ -1,0 +1,40 @@
+read.txt
+
+:Author: kalipy
+:Email: kalipy@debian
+:Date: 2020-12-07 13:29
+
+make编译报错：
+    fatal error: readline/readline.h: No such file or directory
+
+    解决：
+        sudo apt-get install libreadline-dev 
+        
+    再次编译，又报错如下：
+      error while loading shared libraries: libreadline.so.6: cannot open shared object file: No such file or directory
+
+    解决：
+        cd /lib/x86_64-linux-gnu/
+        sudo ln -s libreadline.so.7.0 libreadline.so.6
+
+------------------------------------------------------------------------------
+
+jdb远程调试gradle的java项目
+
+1.-xdebug方式启动App.class -cp:指定classes的路径,即包的根目录
+java -Xdebug -Xrunjdwp:transport=dt_socket,address=8888,server=y,suspend=y -cp build/classes/java/main: com.App
+
+2.jdb远程attach上去 -sourcepath:指定我的写的.java的路径
+./jdbshell -attach 8888 -sourcepath ~/bak2/j2ee_study/kuansen_mybatis/src/main/java
+----------------------------------------------------------------------------
+
+补充知识：
+    命令行编译java大项目
+
+        //-d 指定.class文件生成路径（且会自动生成包名对应的文件夹），./*.java是编译当前目录下的所有.java文件
+        javac -d ./bin ./*.java
+        注意：可在任意目录下执行javac命令，只要写了*.java的路径（这里是./当前目录下）的话
+        
+        //-cp 指定.class文件搜索路径
+        java -cp bin: chapter_1_stackandqueue.Problem_01_GetMinStack
+        注意：可在任意目录下执行java命令，只要加了-cp选项的话
